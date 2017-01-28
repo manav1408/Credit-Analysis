@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1482516061306.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "93FF2ABF",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : -2147483648,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "w02m7q8lsa",
+        "caption" : "german_credit",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=german_credit&cache_key=w02m7q8lsa",
+        "displayedObservations" : "1000",
+        "environment" : "",
+        "object" : "german_credit",
+        "totalObservations" : "1000",
+        "variables" : "21"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

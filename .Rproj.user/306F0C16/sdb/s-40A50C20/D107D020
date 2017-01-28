@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#splitting data into training and testing data set\nsamp_size<-0.8*nrow(german_credit)\ntrain_index<-sample(seq_len(nrow(german_credit)), size = samp_size)\ntrain<-german_credit[train_index,]\ntest<-german_credit[-train_index,]\n#selecting important features\nlibrary(Boruta)\ntrain_Boruta<-Boruta(Creditability~.,data=german_credit,maxRuns = 300,doTrace = 0)\ngerman_attr3<-getSelectedAttributes(train_Boruta,withTentative = FALSE)\nprint(german_attr3)\ntrain<-train[,c(1:8,11,13:16)]\ntest<-test[,c(1:8,11,13:16)]\n#logistic regression\ntrain_log_regr<-glm(Creditability~.,data=train,family = binomial())\ntrain$prediction_log_regr<-predict(train_log_regr,type = \"response\")\ntrain$prediction_log_regr<-ifelse(train$prediction_log_regr>=0.5,1,0)\n#svm\nlibrary(kernlab)\nlibrary(e1071)\n  #set.seed(1492)\n  #ctrl<-trainControl(method=\"repeatedcv\",repeats = 5,summaryFunction = twoClassSummary,classProbs = TRUE)\n  creditability<-factor(train$Creditability)\n\n  #sigmoid kernel\n    train_svm<-svm(Creditability~.,data=train,kernel=\"sigmoid\",type=\"C-classification\",probability=TRUE)\n    x<-subset(train,select = -Creditability)\n    pred<-predict(train_svm,x)\n    train_svm_t<-table(pred,creditability)\n\n  #radial basis kernel\n    train_svm2<-svm(Creditability~.,data=train,kernel=\"radial\",type=\"C-classification\",probability=TRUE)\n    x<-subset(train,select = -Creditability)\n    pred<-predict(train_svm,x)\n    train_svm_t2<-table(pred,creditability)\n\n#neural net\n    train_net2<-neuralnet(Creditability~train$Account.Balance+train$Duration.of.Credit..month.+train$Payment.Status.of.Previous.Credit+train$Purpose+train$Credit.Amount+train$Type.of.apartment+train$Concurrent.Credits+train$Age..years.+train$Most.valuable.available.asset+train$Guarantors+train$Length.of.current.employment+train$Value.Savings.Stocks,data=train,hidden = 4,algorithm = 'backprop',linear.output = FALSE,learningrate = 100,threshold = 0.1)\n    test1<-subset(test,select = -c(Creditability))\n    View(test1)\n    tesst1_net<-compute(train_net2,test1)\n    results<-data.frame(actual=test$Creditability,predicted=tesst1_net$net.result)\n    View(results)\n    results_train_net<-data.frame(actual=train$Creditability,predicted=train_net2$net.result)\n\n#skewness\n\n",
+    "created" : 1482516124098.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "1243711335",
+    "id" : "D107D020",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : -2147483648,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
